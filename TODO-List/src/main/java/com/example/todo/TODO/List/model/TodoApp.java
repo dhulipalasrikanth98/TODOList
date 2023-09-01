@@ -1,10 +1,10 @@
 package com.example.todo.TODO.List.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -15,14 +15,21 @@ import java.util.List;
 @ToString
 @Entity
 @Table(name = "todo_app")
-public class TodoApp {
+public class TodoApp{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @Column(name = "cust_id")
+    private long  id;
+
+    @Column
+    private String emailId;
 
     @Column(name = "date")
     private Date date;
 
-    @Column(name = "tasks")
-    private List<String> tasks;
+    @Column(name = "task")
+    @OneToMany(mappedBy="todoApp",cascade = CascadeType.DETACH)
+    private List<Task> tasks;
+
+
 }
