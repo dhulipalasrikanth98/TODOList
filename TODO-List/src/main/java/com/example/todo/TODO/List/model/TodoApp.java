@@ -28,7 +28,7 @@ public class TodoApp{
     private Date date;
 
     @Column(name = "task")
-    @OneToMany(mappedBy="todoApp",cascade = CascadeType.DETACH)
+    @OneToMany(mappedBy="todoApp",cascade = CascadeType.ALL)
     private List<Task> tasks;
 
 
