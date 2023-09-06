@@ -1,5 +1,6 @@
 package com.example.todo.TODO.List.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,12 +19,14 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "task_id")
-    long id;
+    private long taskId;
 
-    @ManyToOne
-    @JoinColumn(name = "cust_id")
-    TodoApp todoApp;
 
     @Column(name = "task_name")
-    String taskName;
+    private String taskName;
+
+    @ManyToOne
+    @JoinColumn(name="todo_id")
+    @JsonBackReference
+    private TodoApp todoApp;
 }

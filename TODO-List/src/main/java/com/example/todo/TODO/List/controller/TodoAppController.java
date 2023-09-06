@@ -1,6 +1,7 @@
 package com.example.todo.TODO.List.controller;
 
 import com.example.todo.TODO.List.exception.UserNotRegisteredException;
+import com.example.todo.TODO.List.model.DeleteDto;
 import com.example.todo.TODO.List.model.TodoApp;
 import com.example.todo.TODO.List.model.UpdateDto;
 import com.example.todo.TODO.List.repo.TodoRepo;
@@ -23,25 +24,15 @@ public class TodoAppController {
     }
     @PostMapping("/addtask")
     public ResponseEntity<?> addTask(@RequestBody TodoApp todoApp) {
-        try {
-            todoAppService.findUserByEmailAndAddTask(todoApp);
-        }
-        catch(UserNotRegisteredException userNotRegisteredException){
-            return new ResponseEntity<>("no user registered with this user + "+todoApp.getId(),HttpStatus.BAD_GATEWAY);
-        }
-
-      return new ResponseEntity<>(todoApp,HttpStatus.OK);
+      return new ResponseEntity<>( todoAppService.findUserByEmailAndAddTask(todoApp),HttpStatus.OK);
     }
     @PutMapping("/updatetask")
     public ResponseEntity<?> updateTask(@RequestBody UpdateDto updateDto) {
-        try {
-            todoAppService.findUserByEmailAndUpdateTask(updateDto);
-        }
-        catch(UserNotRegisteredException userNotRegisteredException){
-            return new ResponseEntity<>("no user registered with this user + "+updateDto.getEmailId(),HttpStatus.BAD_GATEWAY);
-        }
-
-        return new ResponseEntity<>(updateDto.getTask(),HttpStatus.OK);
+        return new ResponseEntity<>( todoAppService.findUserByEmailAndUpdateTask(updateDto),HttpStatus.OK);
+    }
+    @DeleteMapping("/deleteTask")
+    public ResponseEntity<?> deleteMapping(@RequestBody DeleteDto deleteDto) {
+        return new ResponseEntity<>(todoAppService.findUserByEmailAndDeleteTask(deleteDto),HttpStatus.OK);
     }
 
 }

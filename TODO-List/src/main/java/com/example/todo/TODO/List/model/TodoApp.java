@@ -6,30 +6,44 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
+
 @Entity
 @Table(name = "todo_app")
 public class TodoApp{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cust_id")
+    @Column(name = "todo_id")
     private long  id;
 
-    @Column
+    @Column(name="email_id")
     private String emailId;
 
     @Column(name = "date")
     private Date date;
 
     @Column(name = "task")
-    @OneToMany(mappedBy="todoApp",cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "todoApp",orphanRemoval = true)
     private List<Task> tasks;
 
+
+    @Override
+    public String toString(){
+       StringBuilder res = new StringBuilder();
+       List<String> tasks = new ArrayList<>();
+       for(Task t:this.tasks){
+           res.append("[");
+           res.append(t.getTaskId());
+           res.append(" "+t.getTaskName());
+           res.append("]");
+       }
+       return res.toString();
+    }
 
 }

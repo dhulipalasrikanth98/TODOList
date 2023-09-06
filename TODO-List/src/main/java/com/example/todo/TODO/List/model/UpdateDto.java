@@ -10,7 +10,9 @@ import java.util.List;
 @ToString
 
 public class UpdateDto {
-    String emailId;
-    List<Task> task;
+    private String emailId;
+    private long taskId;
+    private String taskName;
+
 
 }
