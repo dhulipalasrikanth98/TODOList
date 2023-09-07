@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,8 +26,6 @@ public class TodoApp{
     @Column(name="email_id")
     private String emailId;
 
-    @Column(name = "date")
-    private Date date;
 
     @Column(name = "task")
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "todoApp",orphanRemoval = true)

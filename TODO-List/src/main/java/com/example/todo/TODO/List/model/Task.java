@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -21,6 +22,9 @@ public class Task {
     @Column(name = "task_id")
     private long taskId;
 
+    @Column(name = "date")
+    @Temporal(value = TemporalType.DATE)
+    private Date date = new Date();
 
     @Column(name = "task_name")
     private String taskName;

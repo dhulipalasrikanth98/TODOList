@@ -3,17 +3,19 @@ package com.example.todo.TODO.List.service;
 import com.example.todo.TODO.List.exception.InvalidEmailException;
 import com.example.todo.TODO.List.exception.InvalidTasks;
 import com.example.todo.TODO.List.exception.UserNotRegisteredException;
-import com.example.todo.TODO.List.model.DeleteDto;
-import com.example.todo.TODO.List.model.Task;
-import com.example.todo.TODO.List.model.TodoApp;
-import com.example.todo.TODO.List.model.UpdateDto;
+import com.example.todo.TODO.List.model.*;
 import com.example.todo.TODO.List.repo.TaskRepo;
 import com.example.todo.TODO.List.repo.TodoRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 public class TodoAppService {
@@ -26,8 +28,9 @@ public class TodoAppService {
     public TodoApp findByEmailId(String emailId){
         return todoRepo.findByEmailId(emailId);
     }
-    public List<TodoApp> findAllUserWithTasks(){
-        return todoRepo.findAll();
+    public List<TodoApp> findAllUserWithTasks(int pageNo,int pageSize){
+        Pageable pageable = PageRequest.of(pageNo,pageSize);
+        return todoRepo.findAll(pageable).getContent();
     }
 
     public TodoApp findUserByEmailAndAddTask(TodoApp todoApp) {
@@ -99,5 +102,16 @@ public class TodoAppService {
         else{
             return "no user found with that email";
         }
+    }
+
+    public List<?> findAllTasksOfSpecificUser(String emailId,int pageNo, int pageSize) {
+
+        if(pageNo < 0){
+            throw new IllegalArgumentException("enter the pageNo >= 0");
+        }
+        Pageable pageable = PageRequest.of(pageNo,pageSize, Sort.by("i.date","i.taskName"));
+        Page<List<Task>> list = todoRepo.findByEmailIdTasks(emailId,pageable);
+        return list.getContent();
+
     }
 }
