@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,6 +25,7 @@ public class TodoApp{
     private long  id;
 
     @Column(name="email_id")
+    @NotEmpty
     private String emailId;
 
 

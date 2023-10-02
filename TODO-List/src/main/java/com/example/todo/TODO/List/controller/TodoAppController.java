@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/app/todo")
 public class TodoAppController {
@@ -27,15 +29,15 @@ public class TodoAppController {
         return new ResponseEntity<>(todoAppService.findAllTasksOfSpecificUser(emailId,pageNo,pageSize), HttpStatus.OK);
     }
     @PostMapping("/addtask")
-    public ResponseEntity<?> addTask(@RequestBody TodoApp todoApp) {
+    public ResponseEntity<?> addTask(@Valid @RequestBody TodoApp todoApp) {
       return new ResponseEntity<>( todoAppService.findUserByEmailAndAddTask(todoApp),HttpStatus.OK);
     }
     @PutMapping("/updatetask")
-    public ResponseEntity<?> updateTask(@RequestBody UpdateDto updateDto) {
+    public ResponseEntity<?> updateTask(@Valid @RequestBody UpdateDto updateDto) {
         return new ResponseEntity<>( todoAppService.findUserByEmailAndUpdateTask(updateDto),HttpStatus.OK);
     }
     @DeleteMapping("/deleteTask")
-    public ResponseEntity<?> deleteMapping(@RequestBody DeleteDto deleteDto) {
+    public ResponseEntity<?> deleteMapping(@Valid @RequestBody DeleteDto deleteDto) {
         return new ResponseEntity<>(todoAppService.findUserByEmailAndDeleteTask(deleteDto),HttpStatus.OK);
     }
 
